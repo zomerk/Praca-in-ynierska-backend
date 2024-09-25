@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.security.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Training")
@@ -15,8 +16,7 @@ public class Training {
 
     private String workoutName;
     private String activityType;
-    private Timestamp createdAt;
-    private Timestamp scheduledAt;
+    private LocalDate scheduledAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -3,8 +3,8 @@ package com.example.pracainzynierska.entity;
 import com.example.pracainzynierska.enums.FitnessLevel;
 import jakarta.persistence.*;
 import lombok.Data;
+import java.sql.Timestamp;
 
-import java.security.Timestamp;
 
 @Entity
 @Table(name = "Users Table")
@@ -24,7 +24,4 @@ public class User {
     private FitnessLevel fitnessLevel;
 
     private String goal;
-    private Timestamp createdAt;
-
-
 }

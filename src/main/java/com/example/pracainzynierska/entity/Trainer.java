@@ -20,5 +20,4 @@ public class Trainer {
     private String email;
     private String password;
     private Boolean verified;
-    private Timestamp createdAt;
 }
