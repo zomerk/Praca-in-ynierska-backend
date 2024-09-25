@@ -7,7 +7,7 @@ import lombok.Data;
 import java.security.Timestamp;
 
 @Entity
-@Table(name = "User")
+@Table(name = "Users Table")
 @Data
 public class User {
     @Id
