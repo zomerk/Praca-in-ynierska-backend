@@ -8,11 +8,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
-@Component
+
 public class DTOconverter {
 
 
-    public User convertToUser(UserDTO userDTO) {
+    public static User convertToUser(UserDTO userDTO) {
         if (userDTO == null) {
             return null;
         }

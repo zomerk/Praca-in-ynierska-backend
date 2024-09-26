@@ -1,37 +1,34 @@
 package com.example.pracainzynierska.service.adapter;
 
+import com.example.pracainzynierska.entity.Trainer;
 import com.example.pracainzynierska.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-public class UserAdapter implements UserDetails {
-    private final User user;
-
-    public UserAdapter(User user) {
-        this.user = user;
-    }
+@RequiredArgsConstructor
+public class TrainerAdapter implements UserDetails {
+    private final Trainer trainer;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        authorities.add(new SimpleGrantedAuthority("ROLE_TRAINER"));
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return trainer.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return trainer.getEmail();
     }
 
     @Override
@@ -41,7 +38,7 @@ public class UserAdapter implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return trainer.getActive();
     }
 
     @Override
@@ -51,6 +48,6 @@ public class UserAdapter implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return trainer.getVerified();
     }
 }

@@ -19,5 +19,6 @@ public class Trainer {
     private String experienceLevel;
     private String email;
     private String password;
-    private Boolean verified;
+    private Boolean verified = Boolean.FALSE;
+    private Boolean active = Boolean.TRUE;
 }
