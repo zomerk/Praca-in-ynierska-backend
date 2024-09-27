@@ -40,11 +40,11 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(AUTH_WHITELIST).permitAll()
+                       .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers("register/**").permitAll()
-                        .requestMatchers("/trainer").hasRole("TRAINER")
-                        .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/user").hasRole("USER")
+//                        .requestMatchers("/trainer").hasRole("TRAINER")
+//                        .requestMatchers("/admin").hasRole("ADMIN")
+//                        .requestMatchers("/user").hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults())

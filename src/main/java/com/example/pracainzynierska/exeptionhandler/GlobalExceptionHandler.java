@@ -1,5 +1,6 @@
 package com.example.pracainzynierska.exeptionhandler;
 
+import com.example.pracainzynierska.exeption.EmailIsTakenExeption;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,5 +19,10 @@ public class GlobalExceptionHandler {
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 errors.put(error.getField(), error.getDefaultMessage()));
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(EmailIsTakenExeption.class)
+    public ResponseEntity<?> handleEmailIsTaken(EmailIsTakenExeption ex) {
+        // Custom response body can be added here, including error details or timestamp
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 }

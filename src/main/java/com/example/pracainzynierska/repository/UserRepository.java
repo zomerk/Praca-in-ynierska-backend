@@ -9,8 +9,8 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-    public Optional<User> findByEmail(String email);
+    Optional<User> findByEmail(String email);
     @Override
-    public List<User> findAll();
+    List<User> findAll();
 
 }

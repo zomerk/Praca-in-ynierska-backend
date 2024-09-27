@@ -3,6 +3,7 @@ package com.example.pracainzynierska.service;
 import com.example.pracainzynierska.entity.Admin;
 import com.example.pracainzynierska.entity.Trainer;
 import com.example.pracainzynierska.entity.User;
+import com.example.pracainzynierska.exeption.EmailIsTakenExeption;
 import com.example.pracainzynierska.repository.AdminRepository;
 import com.example.pracainzynierska.repository.TrainerRepository;
 import com.example.pracainzynierska.repository.UserRepository;
@@ -10,14 +11,13 @@ import com.example.pracainzynierska.service.adapter.AdminAdapter;
 import com.example.pracainzynierska.service.adapter.TrainerAdapter;
 import com.example.pracainzynierska.service.adapter.UserAdapter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,17 +54,32 @@ public class CustomUserDetailsService implements UserDetailsService {
         throw new UsernameNotFoundException("User not found with email: " + email);
     }
 
-    public User createUser(User user) {
+    public ResponseEntity createUser(User user) {
+        if(!checkIfEmailIsTaken(user.getEmail())) {
+            throw new EmailIsTakenExeption("Email is taken");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        return ResponseEntity.ok(userRepository.save(user));
     }
     public Admin createAdmin(Admin admin) {
+        if(!checkIfEmailIsTaken(admin.getEmail())) {
+            throw new EmailIsTakenExeption("Email is taken");
+        }
         admin.setPassword(passwordEncoder.encode(admin.getPassword()));
         return adminRepository.save(admin);
     }
     public Trainer createTrainer(Trainer trainer) {
+        if(!checkIfEmailIsTaken(trainer.getEmail())) {
+            throw new EmailIsTakenExeption("Email is taken");
+        }
         trainer.setPassword(passwordEncoder.encode(trainer.getPassword()));
         return trainerRepository.save(trainer);
     }
+    Boolean checkIfEmailIsTaken(String email) {
+        boolean isUserEmailTaken = userRepository.findByEmail(email).isPresent();
+        boolean isAdminEmailTaken = adminRepository.findByEmail(email).isPresent();
+        boolean isTrainerEmailTaken = trainerRepository.findByEmail(email).isPresent();
 
+        return !(isUserEmailTaken || isAdminEmailTaken || isTrainerEmailTaken);
+    }
 }
