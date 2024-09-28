@@ -28,10 +28,19 @@ public class AdminController {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDir), sortBy);
         return trainerRepository.findAllByVerifiedIsFalse(PageRequest.of(page, size, sort));
     }
-    @PostMapping("/verified")
-    public void verifiedTrainer(@RequestParam int trainerId) {
-        var trainer = trainerRepository.findByTrainerId(trainerId);
-        trainer.setVerified(true);
-        trainerRepository.save(trainer);
+    @PostMapping("/verify")
+    public void verifiedTrainer(@RequestParam int trainerId,@RequestParam Boolean verified) {
+        if(verified) {
+            var trainer = trainerRepository.findByTrainerId(trainerId);
+            trainer.setVerified(true);
+            trainerRepository.save(trainer);
+        }
+        else {
+            var trainer = trainerRepository.findByTrainerId(trainerId);
+            trainer.setVerified(false);
+            trainer.setActive(false);
+            trainerRepository.save(trainer);
+        }
     }
+    
 }
