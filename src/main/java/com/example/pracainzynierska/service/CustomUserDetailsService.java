@@ -74,6 +74,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         trainer.setPassword(passwordEncoder.encode(trainer.getPassword()));
         return trainerRepository.save(trainer);
+
     }
     Boolean checkIfEmailIsTaken(String email) {
         boolean isUserEmailTaken = userRepository.findByEmail(email).isPresent();

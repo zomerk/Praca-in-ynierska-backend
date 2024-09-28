@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                        .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers("register/**").permitAll()
+                                .requestMatchers("admin/**").hasRole("ADMIN")
 //                        .requestMatchers("/trainer").hasRole("TRAINER")
 //                        .requestMatchers("/admin").hasRole("ADMIN")
 //                        .requestMatchers("/user").hasRole("USER")
