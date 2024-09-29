@@ -2,8 +2,11 @@ package com.example.pracainzynierska.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.security.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "Rating")
@@ -15,7 +18,11 @@ public class Rating {
 
     private Integer ratingValue;
     private String comment;
-    private Timestamp createdAt;
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
+
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

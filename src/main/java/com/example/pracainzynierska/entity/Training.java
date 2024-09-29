@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.security.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Training")
@@ -16,7 +17,7 @@ public class Training {
 
     private String workoutName;
     private String activityType;
-    private LocalDate scheduledAt;
+    private LocalDateTime scheduledAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

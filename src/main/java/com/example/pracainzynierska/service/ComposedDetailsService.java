@@ -1,5 +1,6 @@
 package com.example.pracainzynierska.service;
 
+import com.example.pracainzynierska.dto.LoginDTO;
 import com.example.pracainzynierska.entity.Admin;
 import com.example.pracainzynierska.entity.Trainer;
 import com.example.pracainzynierska.entity.User;
@@ -11,6 +12,8 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -51,36 +54,5 @@ public class ComposedDetailsService implements UserDetailsService {
             }
         }
         throw new UsernameNotFoundException("User Not Found");
-    }
-
-    public ResponseEntity<?> createUser(User user) {
-        if(!checkIfEmailIsTaken(user.getEmail())) {
-            throw new EmailIsTakenExeption("Email is taken");
-        }
-        userService.save(user);
-        return ResponseEntity.ok().body(user);
-    }
-
-    public ResponseEntity<?> createAdmin(Admin admin) {
-        if(!checkIfEmailIsTaken(admin.getEmail())) {
-            throw new EmailIsTakenExeption("Email is taken");
-        }
-        adminService.save(admin);
-        return ResponseEntity.ok().body(admin);
-    }
-
-    public ResponseEntity<?> createTrainer(Trainer trainer) {
-        if(!checkIfEmailIsTaken(trainer.getEmail())) {
-            throw new EmailIsTakenExeption("Email is taken");
-        }
-        trainerService.save(trainer);
-        return ResponseEntity.ok().body(trainer);
-    }
-    public boolean checkIfEmailIsTaken(String email) {
-        boolean isUserEmailTaken = userService.findByEmail(email).isPresent();
-        boolean isAdminEmailTaken = adminService.findByEmail(email).isPresent();
-        boolean isTrainerEmailTaken = trainerService.findByEmail(email).isPresent();
-
-        return !(isUserEmailTaken || isAdminEmailTaken || isTrainerEmailTaken);
     }
 }

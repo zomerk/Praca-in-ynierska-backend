@@ -3,8 +3,11 @@ package com.example.pracainzynierska.entity;
 import com.example.pracainzynierska.enums.Status;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.security.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "Complaint")
@@ -19,8 +22,14 @@ public class Complaint {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private Timestamp createdAt;
-    private Timestamp resolvedAt;
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
 
     @ManyToOne
     @JoinColumn(name = "trainer_id")
