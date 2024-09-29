@@ -2,6 +2,7 @@ package com.example.pracainzynierska.controller;
 
 import com.example.pracainzynierska.entity.Trainer;
 import com.example.pracainzynierska.repository.TrainerRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin")
+@SecurityRequirement(name = "bearerAuth")
 public class AdminController {
     @Autowired
     TrainerRepository trainerRepository;
