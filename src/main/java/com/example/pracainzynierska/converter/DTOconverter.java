@@ -8,14 +8,13 @@ import com.example.pracainzynierska.entity.Trainer;
 import com.example.pracainzynierska.entity.User;
 import com.example.pracainzynierska.enums.FitnessLevel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 
 public class DTOconverter {
-
-
     public static User convertToUser(UserDTO userDTO) {
         if (userDTO == null) {
             return null;
