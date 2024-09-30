@@ -2,6 +2,7 @@ package com.example.pracainzynierska.service.adapter;
 
 import com.example.pracainzynierska.entity.Trainer;
 import com.example.pracainzynierska.entity.User;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 @RequiredArgsConstructor
 public class TrainerAdapter implements UserDetails {
+    @Getter
     private final Trainer trainer;
 
     @Override

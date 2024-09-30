@@ -2,8 +2,12 @@ package com.example.pracainzynierska.entity;
 
 import com.example.pracainzynierska.enums.DurationType;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "Segments")
 public class Segment {
     @Id

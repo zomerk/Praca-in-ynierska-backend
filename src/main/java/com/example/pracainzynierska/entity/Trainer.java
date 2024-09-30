@@ -1,9 +1,11 @@
 package com.example.pracainzynierska.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.security.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "Trainer")
@@ -21,4 +23,8 @@ public class Trainer {
     private String password;
     private Boolean verified = Boolean.FALSE;
     private Boolean active = Boolean.TRUE;
+
+    @OneToMany(mappedBy = "trainer",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<User> users;
 }

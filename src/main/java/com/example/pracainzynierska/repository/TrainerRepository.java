@@ -14,7 +14,5 @@ public interface TrainerRepository extends PagingAndSortingRepository<Trainer, I
     Optional<Trainer> findByEmail(String email);
 
     Page<Trainer> findAllByVerifiedIsFalse(Pageable pageable);
-
     Trainer findByTrainerId(int trainerId);
-
 }

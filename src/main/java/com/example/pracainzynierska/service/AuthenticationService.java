@@ -11,7 +11,6 @@ import com.example.pracainzynierska.repository.UserRepository;
 import com.example.pracainzynierska.service.adapter.AdminAdapter;
 import com.example.pracainzynierska.service.adapter.TrainerAdapter;
 import com.example.pracainzynierska.service.adapter.UserAdapter;
-import com.example.pracainzynierska.service.usersservice.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
