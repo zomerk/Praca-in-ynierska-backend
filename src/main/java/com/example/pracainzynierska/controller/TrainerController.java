@@ -33,10 +33,18 @@ public class TrainerController {
         Trainer loggedTrainer = loggedTrainerAdapter.getTrainer();
         return trainerService.getUsersByTrainer(loggedTrainer.getTrainerId(), pageable);
     }
-    //TODO add training to user
     @PostMapping("/addTraining")
     public ResponseEntity<?> addTraining(@RequestBody Training training, @RequestParam int userId) {
         trainerService.addTraining(training, userId);
         return ResponseEntity.ok().body("Training added successfully");
+    }
+    @PostMapping("/deleteTraining")
+    public ResponseEntity<?> deleteTraining(@RequestParam int trainingId) {
+        trainerService.deleteTraining(trainingId);
+        return ResponseEntity.ok().body("Training deleted successfully");
+    }
+    @GetMapping("/getFeedback")
+    public ResponseEntity<?> getFeedback(@RequestParam int trainingId) {
+        return ResponseEntity.ok().body(trainerService.getFeedback(trainingId));
     }
 }

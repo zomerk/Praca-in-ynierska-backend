@@ -35,7 +35,7 @@ public class User {
     private Trainer trainer;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Training> trainings;
     private String goal;
     @JsonIgnore

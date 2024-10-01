@@ -25,6 +25,9 @@ public class Training {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "training", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Segment> segmentList;
 
+    // New One-to-One relationship with Feedback
+    @OneToOne(mappedBy = "training", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Feedback feedback;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

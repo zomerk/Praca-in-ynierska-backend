@@ -1,6 +1,7 @@
 package com.example.pracainzynierska.entity;
 
 import com.example.pracainzynierska.enums.DurationType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Segment {
     private Integer durationValue;
     private String intensity;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "training_id")
     private Training training;

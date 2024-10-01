@@ -1,6 +1,8 @@
 package com.example.pracainzynierska.entity;
 
 import com.example.pracainzynierska.enums.Feeling;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,7 +21,8 @@ public class Feedback {
 
     private Integer ratingValue;
 
-    @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToOne
     @JoinColumn(name = "training_id")
     private Training training;
 

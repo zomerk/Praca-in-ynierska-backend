@@ -1,9 +1,6 @@
 package com.example.pracainzynierska.service;
 
-import com.example.pracainzynierska.entity.Segment;
-import com.example.pracainzynierska.entity.Trainer;
-import com.example.pracainzynierska.entity.Training;
-import com.example.pracainzynierska.entity.User;
+import com.example.pracainzynierska.entity.*;
 import com.example.pracainzynierska.repository.SegmentRepository;
 import com.example.pracainzynierska.repository.TrainerRepository;
 import com.example.pracainzynierska.repository.TrainingRepository;
@@ -36,7 +33,6 @@ public class TrainerService {
         return userRepository.findByTrainer(trainer, pageable);
     }
 
-    //TODO implement method
     public void addTraining(Training training, int userId) {
         User user = userRepository.findById(userId).get();
         training.setUser(user);
@@ -46,5 +42,15 @@ public class TrainerService {
             segment.setTraining(training);
             segmentRepository.save(segment);
         }
+    }
+    public void deleteTraining(Integer trainingId) {
+        Training tr = trainingRepository.findById(trainingId).get();
+        tr.getSegmentList().clear();
+        trainingRepository.deleteById(trainingId);
+    }
+
+    public Feedback getFeedback(int trainingId) {
+        Training training = trainingRepository.findById(trainingId).get();
+        return training.getFeedback();
     }
 }
