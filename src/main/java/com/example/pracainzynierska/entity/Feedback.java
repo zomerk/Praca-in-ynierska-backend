@@ -21,7 +21,8 @@ public class Feedback {
 
     private Integer ratingValue;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "training_id")
     private Training training;

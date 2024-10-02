@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -52,6 +54,23 @@ public class UserService {
         feedback.setTraining(tr);
         feedbackRepository.save(feedback);
         return ResponseEntity.ok(feedback);
+    }
+    public ResponseEntity<?> deleteFeedback(Integer trainingId) {
+        Optional<Training> optionalTraining = trainingRepository.findById(trainingId);
+        if (optionalTraining.isPresent()) {
+            Training training = optionalTraining.get();
+
+            Feedback feedback = training.getFeedback();
+            if (feedback != null) {
+                // Remove feedback reference from training and delete feedback
+                training.setFeedback(null);
+                feedbackRepository.delete(feedback);
+                trainingRepository.save(training);
+            }
+        } else {
+            throw new RuntimeException("Training not found with ID: " + trainingId);
+        }
+        return ResponseEntity.ok().body("Feedback successfully deleted");
     }
 
 }

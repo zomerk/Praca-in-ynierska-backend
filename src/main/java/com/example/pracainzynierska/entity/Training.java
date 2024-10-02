@@ -26,6 +26,7 @@ public class Training {
     private List<Segment> segmentList;
 
     // New One-to-One relationship with Feedback
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToOne(mappedBy = "training", cascade = CascadeType.ALL, orphanRemoval = true)
     private Feedback feedback;
 

@@ -33,5 +33,9 @@ public class UserController {
     ResponseEntity<?> feedbackAfterTraining(@RequestParam Integer trainingId,@RequestBody Feedback feedback){
         return userService.createFeedback(trainingId, feedback);
     }
+    @DeleteMapping("feedback")
+    ResponseEntity<?> deleteFeedback(@RequestParam Integer trainingId){
+        return userService.deleteFeedback(trainingId);
+    }
 
 }
