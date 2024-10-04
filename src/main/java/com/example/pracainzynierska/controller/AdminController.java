@@ -43,4 +43,12 @@ public class AdminController {
             trainerRepository.save(trainer);
         }
     }
+    @GetMapping("/complaints")
+    public Page<Complaint> getComplaints( @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "10") int size,
+                                          @RequestParam(defaultValue = "complaintId") String sortBy,
+                                          @RequestParam(defaultValue = "asc") String sortDir){
+        return trainerRepository.findAllByVerifiedIsFalse(PageRequest.of(page, size, sort));
+
+    }
 }

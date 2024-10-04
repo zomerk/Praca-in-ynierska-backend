@@ -1,6 +1,7 @@
 package com.example.pracainzynierska.controller;
 
 import com.example.pracainzynierska.entity.Feedback;
+import com.example.pracainzynierska.entity.Rating;
 import com.example.pracainzynierska.entity.Trainer;
 import com.example.pracainzynierska.entity.User;
 import com.example.pracainzynierska.service.UserService;
@@ -36,6 +37,15 @@ public class UserController {
     @DeleteMapping("feedback")
     ResponseEntity<?> deleteFeedback(@RequestParam Integer trainingId){
         return userService.deleteFeedback(trainingId);
+    }
+    @PostMapping("/rating")
+    ResponseEntity<?> addRating(@RequestParam Integer trainerId, @RequestBody Rating rating){
+        return userService.rateYourTrainer(trainerId, rating);
+    }
+    @GetMapping("/rating")
+    public ResponseEntity<?> getRating(@RequestParam int trainerId) {
+        return ResponseEntity.ok(userService.getRating(trainerId));
+
     }
 
 }

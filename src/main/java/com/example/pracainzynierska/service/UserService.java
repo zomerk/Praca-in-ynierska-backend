@@ -1,13 +1,7 @@
 package com.example.pracainzynierska.service;
 
-import com.example.pracainzynierska.entity.Feedback;
-import com.example.pracainzynierska.entity.Trainer;
-import com.example.pracainzynierska.entity.Training;
-import com.example.pracainzynierska.entity.User;
-import com.example.pracainzynierska.repository.FeedbackRepository;
-import com.example.pracainzynierska.repository.TrainerRepository;
-import com.example.pracainzynierska.repository.TrainingRepository;
-import com.example.pracainzynierska.repository.UserRepository;
+import com.example.pracainzynierska.entity.*;
+import com.example.pracainzynierska.repository.*;
 import com.example.pracainzynierska.service.adapter.UserAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +20,8 @@ public class UserService {
     private TrainingRepository trainingRepository;
     @Autowired
     private FeedbackRepository feedbackRepository;
+    @Autowired
+    private RatingRepository ratingRepository;
 
 
     public void signUpToTrainer(Integer userId, Integer trainerId) {
@@ -71,6 +67,25 @@ public class UserService {
             throw new RuntimeException("Training not found with ID: " + trainingId);
         }
         return ResponseEntity.ok().body("Feedback successfully deleted");
+    }
+    public ResponseEntity<?> rateYourTrainer(int TrainerId, Rating rating) {
+        UserAdapter loggedUserAdapter = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loggedUser = loggedUserAdapter.getUser();
+        if(TrainerId != loggedUser.getTrainer().getTrainerId()){
+            throw new RuntimeException("You cannot rate trainer that doesnt train you");
+        }
+        Trainer trainer = trainerRepository.findById(TrainerId).get();
+        if(ratingRepository.existsByUserIdAndTrainer(loggedUser.getUserId(),trainer)){
+            throw new RuntimeException("You can only do one rating");
+        }
+        rating.setTrainer(trainer);
+        rating.setUserId(loggedUser.getUserId());
+        ratingRepository.save(rating);
+        return ResponseEntity.ok("Rating created successfully");
+    }
+    public ResponseEntity getRating(int trainerId) {
+        Trainer trainer = trainerRepository.findById(trainerId).get();
+        return ResponseEntity.ok(trainer.getRatingList());
     }
 
 }

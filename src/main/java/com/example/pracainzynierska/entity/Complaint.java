@@ -1,6 +1,8 @@
 package com.example.pracainzynierska.entity;
 
 import com.example.pracainzynierska.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,6 +15,7 @@ import java.util.Date;
 @Table(name = "Complaint")
 @Data
 public class Complaint {
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer complaintId;
@@ -30,16 +33,9 @@ public class Complaint {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
-
-
-
-    // Getters and Setters
 }

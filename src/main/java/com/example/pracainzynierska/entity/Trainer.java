@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.security.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +25,13 @@ public class Trainer {
     private Boolean verified = Boolean.FALSE;
     private Boolean active = Boolean.TRUE;
 
-    @OneToMany(mappedBy = "trainer",cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "trainer",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<User> users;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "trainer", cascade = CascadeType.ALL)
+    private List<Rating> ratingList;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "trainer", cascade = CascadeType.ALL)
+    private List<Complaint> complaintsList;
 }
