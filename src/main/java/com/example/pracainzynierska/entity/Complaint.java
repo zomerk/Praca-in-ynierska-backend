@@ -25,13 +25,11 @@ public class Complaint {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @JsonIgnore
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private Date updatedAt;
 
     @JsonIgnore
     @ManyToOne

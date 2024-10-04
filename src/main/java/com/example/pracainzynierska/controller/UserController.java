@@ -1,9 +1,6 @@
 package com.example.pracainzynierska.controller;
 
-import com.example.pracainzynierska.entity.Feedback;
-import com.example.pracainzynierska.entity.Rating;
-import com.example.pracainzynierska.entity.Trainer;
-import com.example.pracainzynierska.entity.User;
+import com.example.pracainzynierska.entity.*;
 import com.example.pracainzynierska.service.UserService;
 import com.example.pracainzynierska.service.adapter.UserAdapter;
 import lombok.Getter;
@@ -46,6 +43,11 @@ public class UserController {
     public ResponseEntity<?> getRating(@RequestParam int trainerId) {
         return ResponseEntity.ok(userService.getRating(trainerId));
 
+    }
+    @PostMapping("/complaint")
+    public ResponseEntity<?> postComplaint(int trainerId, @RequestBody Complaint complaint){
+        userService.makeComplaint(trainerId, complaint);
+        return ResponseEntity.ok("Complaint made");
     }
 
 }

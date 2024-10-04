@@ -2,6 +2,8 @@ package com.example.pracainzynierska.controller;
 
 import com.example.pracainzynierska.entity.Complaint;
 import com.example.pracainzynierska.entity.Trainer;
+import com.example.pracainzynierska.enums.Status;
+import com.example.pracainzynierska.repository.ComplaintRepository;
 import com.example.pracainzynierska.repository.TrainerRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     @Autowired
     TrainerRepository trainerRepository;
+    @Autowired
+    ComplaintRepository complaintRepository;
 
     @GetMapping("/unverified")
     public Page<Trainer> getUnverifiedTrainers(
@@ -48,7 +52,9 @@ public class AdminController {
                                           @RequestParam(defaultValue = "10") int size,
                                           @RequestParam(defaultValue = "complaintId") String sortBy,
                                           @RequestParam(defaultValue = "asc") String sortDir){
-        return trainerRepository.findAllByVerifiedIsFalse(PageRequest.of(page, size, sort));
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDir), sortBy);
+        return complaintRepository.findAllByStatus(Status.OPEN,PageRequest.of(page, size, sort));
 
     }
+    // Todo: Post on complain block account if needed and close status.
 }

@@ -22,6 +22,8 @@ public class UserService {
     private FeedbackRepository feedbackRepository;
     @Autowired
     private RatingRepository ratingRepository;
+    @Autowired
+    private ComplaintRepository complaintRepository;
 
 
     public void signUpToTrainer(Integer userId, Integer trainerId) {
@@ -83,9 +85,21 @@ public class UserService {
         ratingRepository.save(rating);
         return ResponseEntity.ok("Rating created successfully");
     }
-    public ResponseEntity getRating(int trainerId) {
+    public ResponseEntity<?> getRating(int trainerId) {
         Trainer trainer = trainerRepository.findById(trainerId).get();
         return ResponseEntity.ok(trainer.getRatingList());
+    }
+    public ResponseEntity<?> makeComplaint(int trainerId, Complaint complaint) {
+        UserAdapter loggedUserAdapter = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loggedUser = loggedUserAdapter.getUser();
+        if(trainerId != loggedUser.getTrainer().getTrainerId()){
+            throw new RuntimeException("You cannot make complaint that doesnt train you");
+        }
+        Trainer trainer = trainerRepository.findById(trainerId).get();
+        complaint.setTrainer(trainer);
+        complaintRepository.save(complaint);
+        return ResponseEntity.ok(complaint);
+
     }
 
 }
