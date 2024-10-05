@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -48,13 +49,31 @@ public class AdminController {
         }
     }
     @GetMapping("/complaints")
-    public Page<Complaint> getComplaints( @RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<Complaint>> getComplaints( @RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "10") int size,
                                           @RequestParam(defaultValue = "complaintId") String sortBy,
                                           @RequestParam(defaultValue = "asc") String sortDir){
         Sort sort = Sort.by(Sort.Direction.fromString(sortDir), sortBy);
-        return complaintRepository.findAllByStatus(Status.OPEN,PageRequest.of(page, size, sort));
+        return ResponseEntity.ok(complaintRepository.findAllByStatus(Status.OPEN,PageRequest.of(page, size, sort)));
 
     }
-    // Todo: Post on complain block account if needed and close status.
+    @PostMapping("/complaint")
+    public ResponseEntity<?> resolveComplaint(@RequestParam int complaintId,@RequestParam Boolean ban) {
+        if(!ban) {
+            var complaint = complaintRepository.findById(complaintId).get();
+            complaint.setStatus(Status.CLOSED);
+            complaintRepository.save(complaint);
+            return ResponseEntity.ok("Trainer is not bannes");
+        }
+        else {
+            var complaint = complaintRepository.findById(complaintId).get();
+            complaint.setStatus(Status.CLOSED);
+            var Trainer  = complaint.getTrainer();
+            Trainer.setActive(false);
+            trainerRepository.save(Trainer);
+            complaintRepository.save(complaint);;
+            return ResponseEntity.ok("Trainer id banned");
+        }
+    }
+
 }
