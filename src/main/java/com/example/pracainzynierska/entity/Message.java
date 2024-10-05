@@ -1,34 +1,40 @@
 package com.example.pracainzynierska.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.security.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Table(name = "Message")
 @Data
 public class Message {
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer messageId;
+    private Long id;
 
-    private String messageText;
-    @CreationTimestamp
-    @Column(updatable = false, name = "created_at")
-    private Date createdAt;
+    private String content;
 
-
-
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "trainer_id")
     private Trainer trainer;
 
+    @CreationTimestamp
+    private LocalDateTime timestamp;
+
+    @JsonIgnore
+    private Boolean userSender;
+    // Getters and Setters
 }
+

@@ -36,8 +36,13 @@ public class User {
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Training> trainings;
+    private List<Training> trainings;
     private String goal;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Message> messageList;
+
     @JsonIgnore
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

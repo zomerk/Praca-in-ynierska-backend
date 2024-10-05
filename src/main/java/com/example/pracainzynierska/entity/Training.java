@@ -14,6 +14,7 @@ import java.util.List;
 @Table(name = "Training")
 @Data
 public class Training {
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer trainingId;

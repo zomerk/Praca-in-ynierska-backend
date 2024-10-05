@@ -49,5 +49,4 @@ public class UserController {
         userService.makeComplaint(trainerId, complaint);
         return ResponseEntity.ok("Complaint made");
     }
-
 }
