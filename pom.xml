@@ -105,6 +105,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <image>
+                        <name>pracainzynierska-app</name> <!-- Updated name with lowercase and hyphen -->
+                    </image>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
