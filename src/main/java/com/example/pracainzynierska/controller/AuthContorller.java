@@ -40,7 +40,7 @@ public class AuthContorller {
         return authenticationService.signUpTrainer(DTOconverter.convertToTrainer(trainer));
     }
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> authenticate(@RequestBody LoginDTO loginUserDto) {
+    public ResponseEntity<LoginResponseDTO> authenticate(@RequestBody @Valid LoginDTO loginUserDto) {
         UserDetails authenticatedUser = authenticationService.authenticate(loginUserDto);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);

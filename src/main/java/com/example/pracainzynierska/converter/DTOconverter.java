@@ -47,10 +47,12 @@ public class DTOconverter {
             return null;
         }
         Trainer trainer1 = new Trainer();
+
         trainer1.setFirstName(trainer.getFirstName());
         trainer1.setLastName(trainer.getLastName());
         trainer1.setEmail(trainer.getEmail());
         trainer1.setPassword(trainer.getPassword());
+        trainer1.setExperienceLevel(trainer.getExperienceLevel());
         return trainer1;
     }
 }
