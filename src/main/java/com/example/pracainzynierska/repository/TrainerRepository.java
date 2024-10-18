@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface TrainerRepository extends PagingAndSortingRepository<Trainer, Integer>, CrudRepository<Trainer, Integer> {
     Optional<Trainer> findByEmail(String email);
 
-    Page<Trainer> findAllByVerifiedIsFalse(Pageable pageable);
+    Page<Trainer> findAllByVerifiedIsFalseAndActiveIsTrue(Pageable pageable);
     Trainer findByTrainerId(int trainerId);
 }

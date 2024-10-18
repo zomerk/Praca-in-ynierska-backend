@@ -101,4 +101,9 @@ public class UserService {
         return ResponseEntity.ok(complaint);
 
     }
+
+    public ResponseEntity<Boolean> hasTrainer() {
+        UserAdapter loggedUserAdapter = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(loggedUserAdapter.getUser().getTrainer() != null);
+    }
 }

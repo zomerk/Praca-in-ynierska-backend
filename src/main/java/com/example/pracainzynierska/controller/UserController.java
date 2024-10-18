@@ -49,4 +49,8 @@ public class UserController {
         userService.makeComplaint(trainerId, complaint);
         return ResponseEntity.ok("Complaint made");
     }
+    @GetMapping("/trainer")
+    public ResponseEntity<Boolean> getTrainer(){
+        return userService.hasTrainer();
+    }
 }

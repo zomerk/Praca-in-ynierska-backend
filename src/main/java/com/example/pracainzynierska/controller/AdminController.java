@@ -32,7 +32,7 @@ public class AdminController {
             @RequestParam(defaultValue = "asc") String sortDir) {
 
         Sort sort = Sort.by(Sort.Direction.fromString(sortDir), sortBy);
-        return trainerRepository.findAllByVerifiedIsFalse(PageRequest.of(page, size, sort));
+        return trainerRepository.findAllByVerifiedIsFalseAndActiveIsTrue(PageRequest.of(page, size, sort));
     }
     @PostMapping("/verify")
     public void acceptTrainer(@RequestParam int trainerId,@RequestParam Boolean verified) {
