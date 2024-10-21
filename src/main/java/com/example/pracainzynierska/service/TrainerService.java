@@ -54,4 +54,8 @@ public class TrainerService {
         Training training = trainingRepository.findById(trainingId).get();
         return training.getFeedback();
     }
+
+    public Page<Trainer> getPaginatedTrainers(Pageable pageable) {
+        return trainerRepository.findAll(pageable);
+    }
 }

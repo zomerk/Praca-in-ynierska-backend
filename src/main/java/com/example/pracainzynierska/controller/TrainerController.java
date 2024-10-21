@@ -47,4 +47,13 @@ public class TrainerController {
     public ResponseEntity<?> getFeedback(@RequestParam int trainingId) {
         return ResponseEntity.ok().body(trainerService.getFeedback(trainingId));
     }
+
+    @GetMapping
+    public ResponseEntity<Page<Trainer>> getPaginatedTrainers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Trainer> trainers = trainerService.getPaginatedTrainers(pageable);
+        return ResponseEntity.ok(trainers);
+    }
 }

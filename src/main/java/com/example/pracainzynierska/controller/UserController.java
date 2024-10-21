@@ -6,6 +6,7 @@ import com.example.pracainzynierska.service.adapter.UserAdapter;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -53,4 +54,5 @@ public class UserController {
     public ResponseEntity<Boolean> getTrainer(){
         return userService.hasTrainer();
     }
+
 }

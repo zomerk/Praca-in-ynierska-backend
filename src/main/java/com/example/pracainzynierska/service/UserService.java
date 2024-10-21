@@ -104,6 +104,11 @@ public class UserService {
 
     public ResponseEntity<Boolean> hasTrainer() {
         UserAdapter loggedUserAdapter = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ResponseEntity.ok(loggedUserAdapter.getUser().getTrainer() != null);
+        if(loggedUserAdapter.getUser().getTrainer() != null){
+            return ResponseEntity.ok(true);
+        }
+        else{
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
