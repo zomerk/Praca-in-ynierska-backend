@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.util.Optional;
 
 @Service
@@ -44,7 +47,13 @@ public class UserService {
     public ResponseEntity<?> getTraining() {
         UserAdapter loggedUserAdapter = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User loggedUser = loggedUserAdapter.getUser();
-        return ResponseEntity.ok(loggedUser.getTrainings());
+        return ResponseEntity.ok(loggedUser.getTrainings().stream().filter((training ->{
+            Month month = training.getScheduledAt().getMonth();
+            int year = training.getScheduledAt().getYear();
+            Month now = LocalDate.now().getMonth();
+            int yearNow = LocalDate.now().getYear();
+            return month == now && year == yearNow;
+        })));
     }
 
     public ResponseEntity<?> createFeedback(Integer trainingId,Feedback feedback) {
