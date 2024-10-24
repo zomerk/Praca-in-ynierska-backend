@@ -56,4 +56,9 @@ public class TrainerController {
         Page<Trainer> trainers = trainerService.getPaginatedTrainers(pageable);
         return ResponseEntity.ok(trainers);
     }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getUser(@RequestParam int userId) {
+        return userService.getUserById(userId);
+    }
 }

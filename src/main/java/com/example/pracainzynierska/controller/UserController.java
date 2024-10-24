@@ -1,14 +1,20 @@
 package com.example.pracainzynierska.controller;
 
+import com.example.pracainzynierska.converter.DTOconverter;
+import com.example.pracainzynierska.dto.UserChangeDTO;
+import com.example.pracainzynierska.dto.UserDTO;
 import com.example.pracainzynierska.entity.*;
+import com.example.pracainzynierska.enums.FitnessLevel;
 import com.example.pracainzynierska.service.UserService;
 import com.example.pracainzynierska.service.adapter.UserAdapter;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -19,6 +25,8 @@ import java.time.Month;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/sign")
     ResponseEntity<?> signUpToTrainer(@RequestParam Integer trainerId){
@@ -56,6 +64,20 @@ public class UserController {
     @GetMapping("/trainer")
     public ResponseEntity<Boolean> getTrainer(){
         return userService.hasTrainer();
+    }
+    @PostMapping("/update")
+    public ResponseEntity<?> updateUser(@RequestBody @Valid UserChangeDTO userDTO){
+        var user = new User();
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setAge(userDTO.getAge());
+        user.setFitnessLevel(FitnessLevel.valueOf(userDTO.getFitnessLevel().toUpperCase())); // Convert String to Enum
+        user.setGoal(userDTO.getGoal());
+        return userService.save(user);
+    }
+    @GetMapping("/user")
+    public ResponseEntity<?> getUser(){
+        return userService.getUser();
     }
 
 }

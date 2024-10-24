@@ -6,11 +6,13 @@ import com.example.pracainzynierska.service.adapter.UserAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,6 +29,8 @@ public class UserService {
     private RatingRepository ratingRepository;
     @Autowired
     private ComplaintRepository complaintRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     public void signUpToTrainer(Integer userId, Integer trainerId) {
@@ -119,5 +123,28 @@ public class UserService {
         else{
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    public ResponseEntity<?> save(User user) {
+        UserAdapter loggedUserAdapter = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loggedUser = loggedUserAdapter.getUser();
+        loggedUser.setAge(user.getAge());
+        loggedUser.setGoal(user.getGoal());
+        loggedUser.setFirstName(user.getFirstName());
+        loggedUser.setLastName(user.getLastName());
+        loggedUser.setFitnessLevel(loggedUser.getFitnessLevel());
+        userRepository.save(loggedUser);
+        return ResponseEntity.ok(user);
+    }
+
+    public ResponseEntity<?> getUser() {
+        UserAdapter loggedUserAdapter = (UserAdapter) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User loggedUser = loggedUserAdapter.getUser();
+        return ResponseEntity.ok(loggedUser);
+    }
+
+    public ResponseEntity<?> getUserById(int userId) {
+        var user = userRepository.findById(userId).get();
+        return ResponseEntity.ok(user.getTrainings());
     }
 }
